@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="kor">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>술탄 여신전 이벤트</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css">
+    <link href="./assets/css/html5reset-1.6.1.css" rel="stylesheet">
+    <link href="./assets/css/style.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+<div class="event1">
+    <div class="top-pc">
+        <div class="photo" style="background-image: url(./assets/images/top-pc.jpg); max-width: 1366px"><img alt="" src="./assets/images/top-pc.gif" /></div>
+    </div>
+    <div class="top-mb">
+        <div class="photo" style="background-image: url(./assets/images/top-mb.jpg)"><img alt="" src="./assets/images/top-mb.gif" /></div>
+    </div>
+</div>
+<div class="event2">
+    <div class="wrap">
+        <div class="event2-title">
+            <span class="isPc"><img alt="02" src="./assets/images/evt2-title-pc.png" /></span>
+            <span class="isMb"><img alt="02" src="./assets/images/evt2-title-mb.png" /></span>
+        </div>
+        <div class="event2-list">
+            <ul>
+                <li>
+                    <div class="cell">
+                        <div><img alt="가을" src="./assets/images/evt2-goddess1.png" /></div>
+                        <div class="score">
+                            <span id="bj1Score">0</span>
+                            점
+                        </div>
+                        <button type="button" data-id="bj1" class="btn js-movie">
+                            <span><img alt="" class="photo" src="" /></span>
+                            <span><img alt="" class="play" src="./assets/images/play.png" /></span>
+                        </button>
+
+                        <button type="button" data-id="bj1" class="btn js-cheer">
+                            <span>응원하기</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div class="cell">
+                        <div><img alt="" src="./assets/images/evt2-goddess2.png" /></div>
+                        <div class="score">
+                            <span id="bj2Score">0</span>
+                            점
+                        </div>
+                        <button type="button" data-id="bj2"  class="btn js-movie">
+                            <span><img alt="" class="photo" src="" /></span>
+                            <span><img alt="" class="play" src="./assets/images/play.png" /></span>
+                        </button>
+
+                        <button type="button" data-id="bj2" class="btn js-cheer">
+                            <span>응원하기</span>
+                        </button>
+                    </div>
+                </li>
+                <li>
+                    <div class="cell">
+                        <div><img alt="아윤" src="./assets/images/evt2-goddess3.png" /></div>
+                        <div class="score">
+                            <span id="bj3Score">0</span>
+                            점
+                        </div>
+                        <button type="button" data-id="bj3" class="btn js-movie">
+                            <span><img alt="" class="photo" src="" /></span>
+                            <span><img alt="" class="play" src="./assets/images/play.png" /></span>
+                        </button>
+
+                        <button type="button" data-id="bj3" class="btn js-cheer">
+                            <span>응원하기</span>
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="event2_msg"><img alt="아윤" src="./assets/images/evt2-msg.png" /></div>
+    </div>
+</div>
+<div class="event3"><div class="wrap"><img alt="" src="./assets/images/bottom.png" /></div></div>
+<div class="footer">
+    <div class="wrap">
+        <p>Copyright ©VENTUMM Corp. All rights reserved</p>
+
+        <button type="button" class="btn js-top">
+            <span><img alt="top" src="./assets/images/btn-top.png" /></span>
+        </button>
+    </div>
+</div>
+
+<div class="modal-back">
+    <div class="mask"></div>
+    <div class="modal">
+        <div class="modal-header">
+            <button type="button" class="btn js-move-close">
+                <span>Close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <iframe id="video"
+                    width="100%" height="100%"
+                    src=""
+                    frameborder="0"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var movieOtion = '?rel=0&autoplay=1&loop=1&playlist=';
+    var movieList = {
+        bj1 : 'D1PvIWdJ8xo',
+        bj2 : 'nM0xDI5R50E',
+        bj3 : 'd9IxdwEFk1c',
+    };
+
+    $(document).ready(function () {
+        // 점수처리
+        $('#bj1Score').text('3,456'); // bj1 score
+        $('#bj2Score').text('1,234'); // bj2 score
+        $('#bj3Score').text('4,321'); // bj3 score
+
+        // 동영상 플레이버튼용 썸네일 불러오기
+        $('.js-movie').each(function(idx, tg){
+           var targetId = $(tg).data('id');
+           var targetUrl = 'http://img.youtube.com/vi/'+ movieList[targetId] +'/mqdefault.jpg';
+           $(tg).find('.photo').attr('src', targetUrl);
+        });
+
+        // 동영상 모달 보기
+        $('.js-movie').on("click", function (e) {
+            var targetId = $(this).data('id');
+            var movieUrl = 'https://www.youtube.com/embed/' + movieList[targetId] + movieOtion + movieList[targetId];
+            console.log(targetId, movieUrl);
+            $('#video').attr('src', movieUrl);
+            $('body').addClass('overflow');
+            $('.modal-back').addClass('on');
+        });
+
+        // 동영상 모달 닫기
+        $('.js-move-close, .mask').on("click", function (e) {
+            $('#video').attr('src', '');
+            $('body').removeClass('overflow');
+            $('.modal-back').removeClass('on');
+        });
+
+        // 응원하기
+        $('.js-cheer').on("click", function (e) {
+            var targetId = $(this).data('id');
+            alert(targetId);
+        });
+
+        // footer top
+        $('.js-top').on("click", function (e) {
+            $('html, body').animate({scrollTop:0},500);
+        });
+    });
+</script>
+
+</body>
+</html>
